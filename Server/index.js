@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import Lead from "./models/leadModel.js";
 
 dotenv.config();
 const app = express();
@@ -15,9 +16,6 @@ const __dirname = path.resolve();
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.log(err));
-
-// MODEL
-import Lead from "./models/leadModel.js";
 
 // API TO SAVE LEAD
 app.post("/api/kundli", async (req, res) => {
@@ -52,3 +50,4 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 app.get('/test', (req, res) => {
   res.send('Backend OK');
 });
+
