@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 import Lead from "./models/leadModel.js";
-
+import leadRoutes from "./routes/leadRoutes.js";
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -30,7 +30,7 @@ app.post("/api/kundli", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
+app.use("/api/leads", leadRoutes);
 // ADMIN ROUTE (Fetch all leads)
 app.get("/api/admin/leads", async (req, res) => {
   const leads = await Lead.find().sort({ createdAt: -1 });
@@ -50,4 +50,5 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 app.get('/test', (req, res) => {
   res.send('Backend OK');
 });
+
 
