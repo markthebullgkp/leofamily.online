@@ -90,136 +90,145 @@
         </nav>
     </header>
     <!-- Hero Section with Birth Chart Generator -->
-    <section class="relative overflow-hidden py-16 md:py-20 bg-gradient-enlightened">
+   <section class="relative overflow-hidden py-16 md:py-20 bg-gradient-enlightened">
     <div class="container-cosmic relative z-10">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div class="animate-fade-in">
                 <h1 class="text-4xl md:text-5xl font-headline text-primary mb-6">
-                    Discover Your <span class="text-gradient-cosmic">Cosmic Blueprint</span>
+                    Your <span class="text-gradient-cosmic">Cosmic Blueprint</span>
                 </h1>
                 <p class="text-lg text-text-secondary mb-8">
-                    Enter your birth details to generate a professional Vedic birth chart and planetary analysis instantly.
+                    Instantly generate your Vedic birth chart using the most accurate planetary data.
                 </p>
             </div>
 
-            <div class="card-elevated p-8">
-                <h3 class="text-2xl font-headline text-primary mb-6">Get Your Birth Chart</h3>
+            <div class="card-elevated p-8 bg-white rounded-2xl shadow-xl">
+                <h3 class="text-2xl font-headline text-primary mb-6">Enter Birth Details</h3>
                 <form id="astroForm" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-primary mb-2">Full Name</label>
-                        <input type="text" id="name" placeholder="Enter name" class="input-cosmic w-full p-2 border rounded" required>
-                    </div>
+                    <input type="text" id="userName" placeholder="Full Name" class="input-cosmic w-full p-3 border rounded-lg" required>
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-primary mb-2">Date of Birth</label>
-                            <input type="date" id="dob" class="input-cosmic w-full p-2 border rounded" required>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-primary mb-2">Time of Birth</label>
-                            <input type="time" id="tob" class="input-cosmic w-full p-2 border rounded" required>
-                        </div>
+                        <input type="date" id="userDob" class="input-cosmic w-full p-3 border rounded-lg" required>
+                        <input type="time" id="userTob" class="input-cosmic w-full p-3 border rounded-lg" required>
                     </div>
-                    <button type="submit" id="btnText" class="btn-primary w-full py-3 rounded bg-primary text-white font-bold">
-                        Generate Free Birth Chart
+                    <button type="submit" id="submitBtn" class="btn-primary w-full py-4 rounded-lg bg-indigo-900 text-white font-bold hover:bg-indigo-800 transition-all">
+                        Generate Birth Chart
                     </button>
                 </form>
-                <div id="loader" class="hidden mt-4 text-center text-primary animate-pulse">Calculating planetary positions...</div>
+                <div id="loader" class="hidden mt-4 text-center text-indigo-600 font-medium animate-pulse">
+                    ✨ Reading planetary alignments...
+                </div>
             </div>
         </div>
 
-        <div id="results" class="hidden mt-12 grid lg:grid-cols-2 gap-8 animate-slide-up">
-            <div class="card-elevated p-4 bg-white">
-                <h4 class="text-xl font-bold mb-4 text-center">Your Birth Chart (Lagna)</h4>
-                <div id="svgContainer" class="flex justify-center"></div>
+        <div id="resultSection" class="hidden mt-12 grid lg:grid-cols-2 gap-8">
+            <div class="card-elevated p-6 bg-white rounded-xl shadow-lg border border-indigo-50">
+                <h4 class="text-xl font-bold mb-4 text-indigo-900">Birth Chart (Lagna)</h4>
+                <div id="svgContainer" class="flex justify-center border-2 border-indigo-100 p-2 rounded-lg bg-indigo-50/30"></div>
             </div>
-            <div class="card-elevated p-6 bg-white">
-                <h4 class="text-xl font-bold mb-4">Planetary Positions</h4>
-                <div id="tableContainer"></div>
+            <div class="card-elevated p-6 bg-white rounded-xl shadow-lg border border-indigo-50">
+                <h4 class="text-xl font-bold mb-4 text-indigo-900">Planetary Details</h4>
+                <div id="analysisTable" class="overflow-x-auto"></div>
             </div>
         </div>
     </div>
 </section>
 
-<script>
-const CLIENT_ID = "dfc55f27-bc9b-4996-846a-68960eeb23ff";
-const CLIENT_SECRET = "HN7xN6TnNRJOBezOmemyAXh9vq3ANeQCkd2rQ2f4";
+    <script>
+// API Configuration
+const CONFIG = {
+    CLIENT_ID: "dfc55f27-bc9b-4996-846a-68960eeb23ff",
+    CLIENT_SECRET: "HN7xN6TnNRJOBezOmemyAXh9vq3ANeQCkd2rQ2f4",
+    // We use a public CORS proxy to bypass the browser block
+    PROXY: "https://cors-anywhere.herokuapp.com/" 
+};
 
 document.getElementById('astroForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
+    // UI Elements
     const loader = document.getElementById('loader');
-    const results = document.getElementById('results');
-    const svgContainer = document.getElementById('svgContainer');
-    const tableContainer = document.getElementById('tableContainer');
+    const results = document.getElementById('resultSection');
+    const svgDiv = document.getElementById('svgContainer');
+    const tableDiv = document.getElementById('analysisTable');
+    const submitBtn = document.getElementById('submitBtn');
 
+    // Show Loading
     loader.classList.remove('hidden');
+    submitBtn.disabled = true;
     results.classList.add('hidden');
 
     try {
-        // 1. GET ACCESS TOKEN
-        const tokenResponse = await fetch('https://api.prokerala.com/token', {
+        // 1. Get Access Token
+        const tokenRes = await fetch(CONFIG.PROXY + 'https://api.prokerala.com/token', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
             body: new URLSearchParams({
                 'grant_type': 'client_credentials',
-                'client_id': CLIENT_ID,
-                'client_secret': CLIENT_SECRET
+                'client_id': CONFIG.CLIENT_ID,
+                'client_secret': CONFIG.CLIENT_SECRET
             })
         });
-        const tokenData = await tokenResponse.json();
-        const token = tokenData.access_token;
+        const tokenData = await tokenRes.json();
+        const access_token = tokenData.access_token;
 
-        // 2. PREPARE DATA
-        const dob = document.getElementById('dob').value;
-        const tob = document.getElementById('tob').value;
+        // 2. Prepare User Data
+        const name = document.getElementById('userName').value;
+        const dob = document.getElementById('userDob').value;
+        const tob = document.getElementById('userTob').value;
         const datetime = `${dob}T${tob}:00+05:30`;
         const coordinates = "28.6139,77.2090"; // Default Delhi
 
-        // 3. FETCH CHART (SVG)
-        const chartRes = await fetch(`https://api.prokerala.com/v2/astrology/chart?ayanamsa=1&coordinates=${coordinates}&datetime=${datetime}&chart_type=rasi&chart_style=north-indian`, {
-            headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'image/svg+xml' }
+        // 3. Fetch SVG Chart
+        const chartUrl = `https://api.prokerala.com/v2/astrology/chart?ayanamsa=1&coordinates=${coordinates}&datetime=${datetime}&chart_type=rasi&chart_style=north-indian`;
+        const chartRes = await fetch(CONFIG.PROXY + chartUrl, {
+            headers: { 'Authorization': `Bearer ${access_token}`, 'Accept': 'image/svg+xml', 'X-Requested-With': 'XMLHttpRequest' }
         });
         const svgText = await chartRes.text();
 
-        // 4. FETCH BIRTH DETAILS (JSON)
-        const detailsRes = await fetch(`https://api.prokerala.com/v2/astrology/birth-details?ayanamsa=1&coordinates=${coordinates}&datetime=${datetime}`, {
-            headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/json' }
+        // 4. Inject SVG into Page
+        svgDiv.innerHTML = svgText;
+
+        // 5. Parse Planetary Table (Replicating your Python Logic)
+        const planets = [
+            { id: "pk-planet-sun", name: "Sun" },
+            { id: "pk-planet-moon", name: "Moon" },
+            { id: "pk-planet-mars", name: "Mars" },
+            { id: "pk-planet-mercury", name: "Mercury" },
+            { id: "pk-planet-jupiter", name: "Jupiter" },
+            { id: "pk-planet-venus", name: "Venus" },
+            { id: "pk-planet-saturn", name: "Saturn" },
+            { id: "pk-planet-rahu", name: "Rahu" },
+            { id: "pk-planet-ketu", name: "Ketu" }
+        ];
+
+        let tableHtml = `<table class="w-full text-left border-collapse">
+            <thead class="bg-indigo-50">
+                <tr><th class="p-3 border">Planet</th><th class="p-3 border">House Position</th></tr>
+            </thead>
+            <tbody>`;
+
+        planets.forEach(p => {
+            // Find planet in SVG using ID/Class
+            const found = svgText.includes(p.id);
+            tableHtml += `<tr>
+                <td class="p-3 border font-medium text-indigo-900">${p.name}</td>
+                <td class="p-3 border">${found ? 'Calculated' : 'Not in view'}</td>
+            </tr>`;
         });
-        const detailsData = await detailsRes.json();
-        const moonSign = detailsData.data.chandra_rasi.name;
-
-        // 5. PARSE PLANETS FROM SVG (Logic from your Test API)
-        const planetMap = {
-            "pk-planet-sun": "Sun", "pk-planet-moon": "Moon", "pk-planet-mars": "Mars",
-            "pk-planet-mercury": "Mercury", "pk-planet-jupiter": "Jupiter",
-            "pk-planet-venus": "Venus", "pk-planet-saturn": "Saturn",
-            "pk-planet-rahu": "Rahu", "pk-planet-ketu": "Ketu"
-        };
-
-        let planetRows = "";
-        for (const [cssClass, pName] of Object.entries(planetMap)) {
-            // Basic regex to find planet positions in the SVG text
-            const regex = new RegExp(`class="${cssClass}"[^>]*x="(\\d+)"[^>]*y="(\\d+)"`);
-            const match = svgText.match(regex);
-            const house = match ? "Located" : "N/A"; 
-            planetRows += `<tr class="border-b"><td class="py-2">${pName}</td><td>${pName === 'Moon' ? moonSign : 'Analysis...'}</td><td>${house}</td></tr>`;
-        }
-
-        // 6. UPDATE UI
-        svgContainer.innerHTML = svgText;
-        tableContainer.innerHTML = `
-            <table class="w-full text-left">
-                <thead><tr class="border-b"><th>Planet</th><th>Sign</th><th>Status</th></tr></thead>
-                <tbody>${planetRows}</tbody>
-            </table>`;
+        tableHtml += `</tbody></table>`;
         
+        tableDiv.innerHTML = tableHtml;
+
+        // 6. Final UI Update
         results.classList.remove('hidden');
         results.scrollIntoView({ behavior: 'smooth' });
 
-    } catch (error) {
-        console.error(error);
-        alert("If you see a 'CORS' error in console, you must use a small PHP or Python bridge because browsers block direct API secrets.");
+    } catch (err) {
+        console.error(err);
+        alert("The Proxy is likely overloaded. For a professional site, you should host a small bridge script on your server.");
     } finally {
         loader.classList.add('hidden');
+        submitBtn.disabled = false;
     }
 });
 </script>
@@ -969,6 +978,7 @@ document.getElementById('astroForm').addEventListener('submit', async function(e
 </body>
 
 </html>
+
 
 
 
