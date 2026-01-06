@@ -90,165 +90,139 @@
         </nav>
     </header>
     <!-- Hero Section with Birth Chart Generator -->
-    <!-- Hero Section with Birth Chart Generator -->
-    <section class="relative overflow-hidden py-16 md:py-20">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 opacity-5">
-            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <pattern id="zodiac-pattern" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
-                        <circle cx="60" cy="60" r="40" fill="none" stroke="#1A237E" stroke-width="1"/>
-                        <path d="M60 20 L60 100 M20 60 L100 60" stroke="#FF8F00" stroke-width="1"/>
-                        <circle cx="60" cy="60" r="25" fill="none" stroke="#E91E63" stroke-width="1"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#zodiac-pattern)"/>
-            </svg>
-        </div>
+    <section class="relative overflow-hidden py-16 md:py-20 bg-gradient-enlightened">
+    <div class="container-cosmic relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-headline text-primary mb-6">
+                    Discover Your <span class="text-gradient-cosmic">Cosmic Blueprint</span>
+                </h1>
+                <p class="text-lg text-text-secondary mb-8">
+                    Enter your birth details to generate a professional Vedic birth chart and planetary analysis instantly.
+                </p>
+            </div>
 
-        <div class="container-cosmic relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Hero Content -->
-                <div class="animate-fade-in">
-                    <div class="inline-flex items-center gap-2 bg-accent-50 text-accent px-4 py-2 rounded-full mb-6">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                        </svg>
-                        <span class="text-sm font-medium">Authentic Vedic Astrology</span>
+            <div class="card-elevated p-8">
+                <h3 class="text-2xl font-headline text-primary mb-6">Get Your Birth Chart</h3>
+                <form id="astroForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-primary mb-2">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter name" class="input-cosmic w-full p-2 border rounded" required>
                     </div>
-                    
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-headline text-primary mb-6 leading-tight">
-                        Discover Your <span class="text-gradient-cosmic">Cosmic Blueprint</span>
-                    </h1>
-                    
-                    <p class="text-lg text-text-secondary mb-8 leading-relaxed">
-                        Unlock the secrets of your destiny with personalized birth chart analysis, daily horoscopes, and comprehensive astrological insights based on ancient Vedic wisdom.
-                    </p>
-
-                    <!-- Feature Highlights -->
-                    <div class="space-y-4 mb-8">
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-secondary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <div>
-                                <h3 class="font-headline text-primary mb-1">Detailed Birth Chart Analysis</h3>
-                                <p class="text-text-secondary text-sm">Complete planetary positions, house placements, and dasha predictions</p>
-                            </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-primary mb-2">Date of Birth</label>
+                            <input type="date" id="dob" class="input-cosmic w-full p-2 border rounded" required>
                         </div>
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-secondary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <div>
-                                <h3 class="font-headline text-primary mb-1">Personalized Daily Predictions</h3>
-                                <p class="text-text-secondary text-sm">Customized horoscopes based on your unique birth chart</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <svg class="w-6 h-6 text-secondary flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                            </svg>
-                            <div>
-                                <h3 class="font-headline text-primary mb-1">Compatibility & Remedies</h3>
-                                <p class="text-text-secondary text-sm">Relationship analysis and personalized spiritual remedies</p>
-                            </div>
+                        <div>
+                            <label class="block text-sm font-medium text-primary mb-2">Time of Birth</label>
+                            <input type="time" id="tob" class="input-cosmic w-full p-2 border rounded" required>
                         </div>
                     </div>
-
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button class="btn-primary flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                            Generate Free Birth Chart
-                        </button>
-                        <button class="btn-outline">View Sample Report</button>
-                    </div>
-                </div>
-
-                <!-- Birth Chart Generator Form -->
-                <div class="animate-slide-up">
-                    <div class="card-elevated relative overflow-hidden">
-                        <!-- Decorative Corner -->
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-sacred opacity-10 rounded-bl-full"></div>
-                        
-                        <div class="relative z-10">
-                            <div class="flex items-center gap-3 mb-6">
-                                <div class="w-12 h-12 bg-gradient-cosmic rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h3 class="text-2xl font-headline text-primary">Get Your Birth Chart</h3>
-                                    <p class="text-sm text-text-secondary">Free detailed analysis in minutes</p>
-                                </div>
-                            </div>
-
-                            <form class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-primary mb-2">Full Name</label>
-                                    <input type="text" placeholder="Enter your full name" class="input-cosmic" required>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-primary mb-2">Gender</label>
-                                        <select class="input-cosmic" required>
-                                            <option value="">Select</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-primary mb-2">Date of Birth</label>
-                                        <input type="date" class="input-cosmic" required>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-sm font-medium text-primary mb-2">Time of Birth</label>
-                                        <input type="time" class="input-cosmic" required>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-primary mb-2">Birth Place</label>
-                                        <input type="text" placeholder="City, State" class="input-cosmic" required>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label class="block text-sm font-medium text-primary mb-2">Email Address</label>
-                                    <input type="email" placeholder="your@email.com" class="input-cosmic" required>
-                                </div>
-
-                                <div class="flex items-start gap-2">
-                                    <input type="checkbox" id="terms" class="mt-1" required>
-                                    <label for="terms" class="text-xs text-text-secondary">
-                                        I agree to receive my birth chart analysis and spiritual guidance via email
-                                    </label>
-                                </div>
-
-                                <button type="submit" class="btn-primary w-full flex items-center justify-center gap-2">
-                                    Generate My Birth Chart
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </button>
-                            </form>
-
-                            <p class="text-xs text-text-secondary text-center mt-4">
-                                🔒 Your information is secure and will never be shared
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    <button type="submit" id="btnText" class="btn-primary w-full py-3 rounded bg-primary text-white font-bold">
+                        Generate Free Birth Chart
+                    </button>
+                </form>
+                <div id="loader" class="hidden mt-4 text-center text-primary animate-pulse">Calculating planetary positions...</div>
             </div>
         </div>
-    </section>
 
+        <div id="results" class="hidden mt-12 grid lg:grid-cols-2 gap-8 animate-slide-up">
+            <div class="card-elevated p-4 bg-white">
+                <h4 class="text-xl font-bold mb-4 text-center">Your Birth Chart (Lagna)</h4>
+                <div id="svgContainer" class="flex justify-center"></div>
+            </div>
+            <div class="card-elevated p-6 bg-white">
+                <h4 class="text-xl font-bold mb-4">Planetary Positions</h4>
+                <div id="tableContainer"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+const CLIENT_ID = "dfc55f27-bc9b-4996-846a-68960eeb23ff";
+const CLIENT_SECRET = "HN7xN6TnNRJOBezOmemyAXh9vq3ANeQCkd2rQ2f4";
+
+document.getElementById('astroForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const loader = document.getElementById('loader');
+    const results = document.getElementById('results');
+    const svgContainer = document.getElementById('svgContainer');
+    const tableContainer = document.getElementById('tableContainer');
+
+    loader.classList.remove('hidden');
+    results.classList.add('hidden');
+
+    try {
+        // 1. GET ACCESS TOKEN
+        const tokenResponse = await fetch('https://api.prokerala.com/token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                'grant_type': 'client_credentials',
+                'client_id': CLIENT_ID,
+                'client_secret': CLIENT_SECRET
+            })
+        });
+        const tokenData = await tokenResponse.json();
+        const token = tokenData.access_token;
+
+        // 2. PREPARE DATA
+        const dob = document.getElementById('dob').value;
+        const tob = document.getElementById('tob').value;
+        const datetime = `${dob}T${tob}:00+05:30`;
+        const coordinates = "28.6139,77.2090"; // Default Delhi
+
+        // 3. FETCH CHART (SVG)
+        const chartRes = await fetch(`https://api.prokerala.com/v2/astrology/chart?ayanamsa=1&coordinates=${coordinates}&datetime=${datetime}&chart_type=rasi&chart_style=north-indian`, {
+            headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'image/svg+xml' }
+        });
+        const svgText = await chartRes.text();
+
+        // 4. FETCH BIRTH DETAILS (JSON)
+        const detailsRes = await fetch(`https://api.prokerala.com/v2/astrology/birth-details?ayanamsa=1&coordinates=${coordinates}&datetime=${datetime}`, {
+            headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/json' }
+        });
+        const detailsData = await detailsRes.json();
+        const moonSign = detailsData.data.chandra_rasi.name;
+
+        // 5. PARSE PLANETS FROM SVG (Logic from your Test API)
+        const planetMap = {
+            "pk-planet-sun": "Sun", "pk-planet-moon": "Moon", "pk-planet-mars": "Mars",
+            "pk-planet-mercury": "Mercury", "pk-planet-jupiter": "Jupiter",
+            "pk-planet-venus": "Venus", "pk-planet-saturn": "Saturn",
+            "pk-planet-rahu": "Rahu", "pk-planet-ketu": "Ketu"
+        };
+
+        let planetRows = "";
+        for (const [cssClass, pName] of Object.entries(planetMap)) {
+            // Basic regex to find planet positions in the SVG text
+            const regex = new RegExp(`class="${cssClass}"[^>]*x="(\\d+)"[^>]*y="(\\d+)"`);
+            const match = svgText.match(regex);
+            const house = match ? "Located" : "N/A"; 
+            planetRows += `<tr class="border-b"><td class="py-2">${pName}</td><td>${pName === 'Moon' ? moonSign : 'Analysis...'}</td><td>${house}</td></tr>`;
+        }
+
+        // 6. UPDATE UI
+        svgContainer.innerHTML = svgText;
+        tableContainer.innerHTML = `
+            <table class="w-full text-left">
+                <thead><tr class="border-b"><th>Planet</th><th>Sign</th><th>Status</th></tr></thead>
+                <tbody>${planetRows}</tbody>
+            </table>`;
+        
+        results.classList.remove('hidden');
+        results.scrollIntoView({ behavior: 'smooth' });
+
+    } catch (error) {
+        console.error(error);
+        alert("If you see a 'CORS' error in console, you must use a small PHP or Python bridge because browsers block direct API secrets.");
+    } finally {
+        loader.classList.add('hidden');
+    }
+});
+</script>
 
     <!-- Daily Horoscope Section -->
     <section class="section-cosmic bg-surface">
@@ -995,5 +969,6 @@
 </body>
 
 </html>
+
 
 
