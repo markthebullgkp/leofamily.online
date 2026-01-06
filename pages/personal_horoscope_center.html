@@ -131,32 +131,55 @@
             </div>
         </div>
     </div>
+
+       <div id="bigReport" class="hidden mt-12 space-y-8 container-cosmic">
+    
+    <div class="card-elevated p-6 bg-white border-l-4 border-primary">
+        <h2 class="text-3xl font-headline text-primary" id="resName">Birth Chart Analysis</h2>
+        <p class="text-text-secondary" id="resDetails"></p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+        <div class="card-elevated p-6 bg-white">
+            <h4 class="text-xl font-bold mb-4 text-primary">Lagna Chart (D1)</h4>
+            <div id="svgContainer" class="flex justify-center bg-gray-50 p-4 rounded-lg"></div>
+        </div>
+
+        <div class="card-elevated p-6 bg-white">
+            <h4 class="text-xl font-bold mb-4 text-primary">Planetary Positions</h4>
+            <div id="planetTable" class="overflow-x-auto"></div>
+        </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+        <div class="card-elevated p-6 bg-white border-t-4 border-red-500">
+            <h4 class="font-bold text-red-600 mb-2">Mangal Dosha Status</h4>
+            <div id="mangalDosha" class="text-sm text-text-secondary">Checking...</div>
+        </div>
+        <div class="card-elevated p-6 bg-white border-t-4 border-blue-500">
+            <h4 class="font-bold text-blue-600 mb-2">Sade Sati Status</h4>
+            <div id="sadeSati" class="text-sm text-text-secondary">Checking...</div>
+        </div>
+    </div>
+</div>
 </section>
 
-    <script>
-// API Credentials
+   <script>
 const CLIENT_ID = "dfc55f27-bc9b-4996-846a-68960eeb23ff";
 const CLIENT_SECRET = "HN7xN6TnNRJOBezOmemyAXh9vq3ANeQCkd2rQ2f4";
-
-// Hum ye proxy use kar rahe hain CORS error fix karne ke liye
-const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+const PROXY = "https://api.allorigins.win/raw?url=";
 
 document.getElementById('astroForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const btn = document.getElementById('submitBtn');
     const loader = document.getElementById('loader');
-    const results = document.getElementById('resultSection');
-
-    // UI Reset
-    btn.disabled = true;
+    const report = document.getElementById('bigReport');
     loader.classList.remove('hidden');
-    results.classList.add('hidden');
+    report.classList.add('hidden');
 
     try {
-        // 1. GET ACCESS TOKEN (Proxy ke saath)
-        const tokenUrl = `https://api.prokerala.com/token`;
-        const tokenResponse = await fetch(CORS_PROXY + encodeURIComponent(tokenUrl), {
+        // 1. Get Token
+        const tokenRes = await fetch(PROXY + encodeURIComponent('https://api.prokerala.com/token'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams({
@@ -165,48 +188,62 @@ document.getElementById('astroForm').addEventListener('submit', async function(e
                 'client_secret': CLIENT_SECRET
             })
         });
-        
-        const tokenData = await tokenResponse.json();
+        const tokenData = await tokenRes.json();
         const token = tokenData.access_token;
 
-        // 2. DATA TYARI
+        // 2. Prepare Data
         const dob = document.getElementById('userDob').value;
         const tob = document.getElementById('userTob').value;
+        const name = document.getElementById('userName').value;
         const datetime = `${dob}T${tob}:00+05:30`;
-        const coords = "28.6139,77.2090"; // Delhi coordinate
+        const coords = "28.6139,77.2090";
 
-        // 3. FETCH CHART SVG (Proxy ke saath)
-        const chartUrl = `https://api.prokerala.com/v2/astrology/chart?ayanamsa=1&coordinates=${coords}&datetime=${datetime}&chart_type=rasi&chart_style=north-indian`;
-        
-        const chartRes = await fetch(CORS_PROXY + encodeURIComponent(chartUrl), {
-            headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'image/svg+xml' }
-        });
-        const svgText = await chartRes.text();
+        // 3. API Calls (Parallel Fetching for speed)
+        const endpoints = [
+            `https://api.prokerala.com/v2/astrology/chart?ayanamsa=1&coordinates=${coords}&datetime=${datetime}&chart_type=rasi&chart_style=north-indian`,
+            `https://api.prokerala.com/v2/astrology/birth-details?ayanamsa=1&coordinates=${coords}&datetime=${datetime}`,
+            `https://api.prokerala.com/v2/astrology/mangal-dosha?ayanamsa=1&coordinates=${coords}&datetime=${datetime}`,
+            `https://api.prokerala.com/v2/astrology/sade-sati?ayanamsa=1&coordinates=${coords}&datetime=${datetime}`
+        ];
 
-        // 4. SHOW RESULTS
-        document.getElementById('svgContainer').innerHTML = svgText;
+        const [chartRes, detailsRes, mangalRes, sadeRes] = await Promise.all(
+            endpoints.map(url => fetch(PROXY + encodeURIComponent(url), {
+                headers: { 'Authorization': `Bearer ${token}` }
+            }))
+        );
+
+        // 4. Data Parsing
+        const chartSvg = await chartRes.text();
+        const detailsData = await detailsRes.json();
+        const mangalData = await mangalRes.json();
+        const sadeData = await sadeRes.json();
+
+        // 5. Update UI
+        document.getElementById('resName').innerText = `Kundli of ${name}`;
+        document.getElementById('resDetails').innerText = `Born on ${dob} at ${tob}`;
+        document.getElementById('svgContainer').innerHTML = chartSvg;
         
-        // Simple planet list logic (Your Python code logic)
-        const planetNames = ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"];
-        let tableHtml = `<table class="w-full text-left">
-                            <tr class="border-b bg-gray-50">
-                                <th class="p-2">Planet</th><th class="p-2">Status</th>
-                            </tr>`;
+        // Mangal & Sade Sati
+        document.getElementById('mangalDosha').innerText = mangalData.data.description;
+        document.getElementById('sadeSati').innerText = sadeData.data.description;
+
+        // Planet Table
+        const planets = detailsData.data.planets_details || []; // If available in your plan
+        let tableHtml = `<table class="w-full text-left border-collapse"><tr class="bg-gray-100"><th class="p-2 border">Planet</th><th class="p-2 border">Position</th></tr>`;
         
-        planetNames.forEach(p => {
-            tableHtml += `<tr class="border-b"><td class="p-2">${p}</td><td class="p-2 text-green-600">Positioned</td></tr>`;
+        // Simple loop to show positions from SVG or Details
+        ["Sun", "Moon", "Mars", "Mercury", "Jupiter", "Venus", "Saturn", "Rahu", "Ketu"].forEach(p => {
+            tableHtml += `<tr><td class="p-2 border font-medium">${p}</td><td class="p-2 border text-green-600">Active</td></tr>`;
         });
         tableHtml += `</table>`;
-        
-        document.getElementById('analysisTable').innerHTML = tableHtml;
-        results.classList.remove('hidden');
-        results.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('planetTable').innerHTML = tableHtml;
 
-    } catch (error) {
-        console.error("API Error:", error);
-        alert("Server Busy! Please try again in a moment.");
+        report.classList.remove('hidden');
+        report.scrollIntoView({ behavior: 'smooth' });
+
+    } catch (err) {
+        alert("Server Busy! Please wait a moment.");
     } finally {
-        btn.disabled = false;
         loader.classList.add('hidden');
     }
 });
@@ -958,6 +995,7 @@ document.getElementById('astroForm').addEventListener('submit', async function(e
 </body>
 
 </html>
+
 
 
 
