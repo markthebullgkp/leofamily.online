@@ -249,7 +249,11 @@ document.getElementById('astroForm').addEventListener('submit', async function(e
 });
 </script>
 
-<!-- mark the Bull Section -->
+    <!-- Daily Horoscope Section -->
+
+    <section class="section-cosmic bg-surface">
+        
+    <!-- mark the Bull Section -->
 <div style="width: 100%; text-align: center;">
   <iframe 
     src="https://numerology-mobile-number-calculator-749439135995.us-west1.run.app" 
@@ -295,154 +299,11 @@ async function getNumerology() {
         btn.disabled = false;
     }
 }
-    </script>    
-
-    <!-- Daily Horoscope Section -->
-    <section class="section-cosmic bg-surface">
-        <div class="container-cosmic">
-            <div class="text-center mb-12">
-                <div class="inline-flex items-center gap-2 bg-secondary-50 text-secondary px-4 py-2 rounded-full mb-4">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L11 4.323V3a1 1 0 011-1zm-5 8.274l-.818 2.552c-.25.78.409 1.574 1.318 1.574H9.5a1 1 0 01.894.553l.448.894a1 1 0 001.788 0l.448-.894A1 1 0 0114 13.4h3.5c.909 0 1.568-.794 1.318-1.574l-.818-2.552a1 1 0 00-.95-.69H6.95a1 1 0 00-.95.69z"/>
-                    </svg>
-                    <span class="text-sm font-medium">Today's Predictions - December 30, 2025</span>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-headline text-primary mb-4">Daily Horoscope by Zodiac Sign</h2>
-                <p class="text-text-secondary max-w-2xl mx-auto">Discover what the stars have aligned for you today</p>
-            </div>
-
-            <!-- Zodiac Sign Tabs -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button class="px-6 py-3 bg-primary text-white rounded-lg font-medium transition-all hover:shadow-cosmic-medium" data-sign="aries">
-                    ♈ Aries
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="taurus">
-                    ♉ Taurus
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="gemini">
-                    ♊ Gemini
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="cancer">
-                    ♋ Cancer
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="leo">
-                    ♌ Leo
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="virgo">
-                    ♍ Virgo
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="libra">
-                    ♎ Libra
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="scorpio">
-                    ♏ Scorpio
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="sagittarius">
-                    ♐ Sagittarius
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="capricorn">
-                    ♑ Capricorn
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="aquarius">
-                    ♒ Aquarius
-                </button>
-                <button class="px-6 py-3 bg-surface border border-border text-text-secondary rounded-lg font-medium transition-all hover:border-primary hover:text-primary" data-sign="pisces">
-                    ♓ Pisces
-                </button>
-            </div>
-
-            <!-- Horoscope Content -->
-            <div class="max-w-4xl mx-auto">
-                <div class="card-elevated">
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <!-- Zodiac Symbol -->
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="w-32 h-32 bg-gradient-cosmic rounded-full flex items-center justify-center mb-4">
-                                <span class="text-6xl text-white">♈</span>
-                            </div>
-                            <h3 class="text-2xl font-headline text-primary mb-1">Aries</h3>
-                            <p class="text-text-secondary text-sm">Mar 21 - Apr 19</p>
-                            <div class="mt-4 text-center">
-                                <div class="text-sm text-text-secondary mb-1">Lucky Number</div>
-                                <div class="text-2xl font-headline text-secondary">7</div>
-                            </div>
-                        </div>
-
-                        <!-- Horoscope Details -->
-                        <div class="md:col-span-2">
-                            <div class="mb-6">
-                                <h4 class="text-xl font-headline text-primary mb-3">Today's Cosmic Guidance</h4>
-                                <p class="text-text-secondary leading-relaxed mb-4">
-                                    Mars aligns favorably in your career sector, bringing powerful opportunities for advancement. Your natural leadership qualities shine brightly today. A conversation with a mentor or authority figure could open unexpected doors. Trust your instincts in financial matters, but avoid impulsive decisions.
-                                </p>
-                                <p class="text-text-secondary leading-relaxed">
-                                    Evening hours are ideal for creative pursuits and romantic connections. The Moon's position suggests emotional clarity and deeper understanding in relationships.
-                                </p>
-                            </div>
-
-                            <!-- Rating Indicators -->
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-text-secondary">Love & Romance</span>
-                                        <span class="text-sm font-medium text-accent">85%</span>
-                                    </div>
-                                    <div class="h-2 bg-border rounded-full overflow-hidden">
-                                        <div class="h-full bg-accent rounded-full" style="width: 85%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-text-secondary">Career & Finance</span>
-                                        <span class="text-sm font-medium text-secondary">92%</span>
-                                    </div>
-                                    <div class="h-2 bg-border rounded-full overflow-hidden">
-                                        <div class="h-full bg-secondary rounded-full" style="width: 92%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-text-secondary">Health & Wellness</span>
-                                        <span class="text-sm font-medium text-success">78%</span>
-                                    </div>
-                                    <div class="h-2 bg-border rounded-full overflow-hidden">
-                                        <div class="h-full bg-success rounded-full" style="width: 78%"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm text-text-secondary">Spiritual Growth</span>
-                                        <span class="text-sm font-medium text-primary">88%</span>
-                                    </div>
-                                    <div class="h-2 bg-border rounded-full overflow-hidden">
-                                        <div class="h-full bg-primary rounded-full" style="width: 88%"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Lucky Elements -->
-                            <div class="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-                                <div>
-                                    <div class="text-xs text-text-secondary mb-1">Lucky Color</div>
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-4 h-4 bg-red-600 rounded-full"></div>
-                                        <span class="text-sm font-medium text-primary">Red</span>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="text-xs text-text-secondary mb-1">Lucky Time</div>
-                                    <div class="text-sm font-medium text-primary">2 PM - 4 PM</div>
-                                </div>
-                                <div>
-                                    <div class="text-xs text-text-secondary mb-1">Lucky Direction</div>
-                                    <div class="text-sm font-medium text-primary">East</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    </script>  
+    
+    
+    
+    
     </section>
 
     <!-- Compatibility Checker Tool -->
@@ -1042,6 +903,7 @@ async function getNumerology() {
 </body>
 
 </html>
+
 
 
 
